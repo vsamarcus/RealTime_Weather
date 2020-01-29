@@ -19,7 +19,7 @@ function buscaTemp() {
   xhr.send();
 }
 
-const showClimate = document.getElementById("temperatura");
+const showClimate = document.getElementById("showClimate");
 
 function tempoView(json) {
   const climate = JSON.parse(json);
@@ -66,3 +66,5 @@ function tempoView(json) {
     `;
   }
 }
+
+const date = new Date();
