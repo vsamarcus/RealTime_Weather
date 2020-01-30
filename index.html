@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Previsão do Tempo</title>
+    <title>Real Time Weather Widget</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="./css/style.css" rel="stylesheet" type="text/css" media="all" />
@@ -17,20 +17,19 @@
       rel="stylesheet"
       type="text/css"
     />
-
   </head>
   <body>
-
     <div class="main-agileits">
-      <h1>Previsão do Tempo</h1>
+      <h1 style="color: black;">Real Time Weather Widget</h1>
       <div class="main-wthree-row">
-        <div class="agileinfo-text">
-			<div id="showClimate"></div>
+        <div class="agileinfo-text">       
+          <input type="text" onblur="buscaTemp(this.value)" id="readCity" class="readCityLayout">
+          <div id="showClimate"></div>
+          <div id="date"></div>
         </div>
-        <div id="date"></div>
       </div>
     </div>
-	<script src="./js/main.js"></script>
-	<script src="./js/jquery-2.2.3.min.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/jquery-2.2.3.min.js"></script>
   </body>
 </html>

@@ -1,7 +1,8 @@
 window.onload = buscaTemp();
 
 function buscaTemp() {
-  const cidade = "roraima";
+  const readCity = document.getElementById("readCity");
+  const cidade = readCity.value;
   const apiKey = "1885c2a84e8a2a00d93e0485b7dbd4e7";
   const url =
     "http://api.openweathermap.org/data/2.5/weather?q=" +
@@ -13,7 +14,13 @@ function buscaTemp() {
   xhr.open("GET", url);
 
   xhr.onload = function() {
-    tempoView(xhr.responseText);
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        tempoView(xhr.responseText);
+      } else {
+        cityNotFound();
+      }
+    }
   };
 
   xhr.send();
@@ -25,7 +32,7 @@ function tempoView(json) {
   const climate = JSON.parse(json);
   console.log(climate);
 
-  const tempCelsius = climate["main"].temp.toFixed(0);
+  const tempCelsius = climate["main"].temp.toFixed();
 
   if (climate.weather[0].main === "Rain") {
     const oldClimate = "Rain";
@@ -38,6 +45,7 @@ function tempoView(json) {
       <h6 class="agileinfo-texth6">${changeClimate}</h6>
     </div>
     `;
+    showDate();
   }
 
   if (climate.weather[0].main === "Clouds") {
@@ -51,10 +59,11 @@ function tempoView(json) {
       <h6 class="agileinfo-texth6">${changeClimate}</h6>
     </div>
     `;
+    showDate();
   }
 
   if (climate.weather[0].main === "Clear") {
-    const oldClimate = "Clouds";
+    const oldClimate = "Clear";
     const changeClimate = oldClimate.replace("Clear", "Sol");
 
     showClimate.innerHTML = `
@@ -64,7 +73,59 @@ function tempoView(json) {
       <h6 class="agileinfo-texth6">${changeClimate}</h6>
     </div>
     `;
+
+    showDate();
   }
 }
 
-const date = new Date();
+function showDate() {
+  const getDateHour = document.getElementById("date");
+  var mydate = new Date();
+  var year = mydate.getYear();
+  if (year < 1000) year += 1900;
+  var day = mydate.getDay();
+  var month = mydate.getMonth();
+  var daym = mydate.getDate();
+  if (daym < 10) daym = "0" + daym;
+  var dayarray = new Array(
+    "Domingo",
+    "Segunda",
+    "Terça",
+    "Quarta",
+    "Quinta",
+    "Sexta",
+    "Sábado"
+  );
+  var monthArray = new Array(
+    "Janeiro",
+    "Feveireiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro"
+  );
+
+  getDateHour.innerHTML = `<div class="agileinfo-textH2SpanY">${dayarray[day]}, ${daym} ${monthArray[month]} ${year}</div>`;
+}
+
+function cityNotFound() {
+  showClimate.innerHTML = `
+  <div class="date">
+    <h2 class="agileinfo-texth3">Cidade não encontrada</h2>
+  </div>
+  `;
+}
+
+const pressEnter = document.getElementById("readCity");
+pressEnter.addEventListener("keyup", function(e) {
+  var key = e.which || e.keyCode;
+  if (key == 13) {
+    buscaTemp();
+  }
+});
