@@ -1,1 +1,1 @@
-# PrevisãoTempo
+# Estudando conceitos de XMLHTTPRequest
